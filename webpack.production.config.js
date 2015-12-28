@@ -10,20 +10,20 @@ var TEM_PATH = path.resolve(ROOT_PATH,'templates');
 
 module.exports = {
 	entry: {
-		app:path.resolve(APP_PATH,'index.js'),
+		app: path.resolve(APP_PATH,'index.js'),
 		mobile: path.resolve(APP_PATH,'mobile.js'),
-		vendors:['jquery','moment']
+		vendors: ['jquery','moment']
 	},
 	output: {
 		path: BUILD_PATH,
 		filename: '[name].[hash].js'
 	},
-	devServer:{
-		historyApiFallback:true,
-		hot:true,
-		inline:true,
-		progress:true
-	},
+	// devServer:{
+	// 	historyApiFallback:true,
+	// 	hot:true,
+	// 	inline:true,
+	// 	progress:true
+	// },
 	module:{
 		loaders:[
 			{
@@ -43,16 +43,17 @@ module.exports = {
 					presets:['es2015']
 				}
 			}
-		],
-		perLoaders : [
-			{
-				test: /\.jsx?$/,
-				include:APP_PATH,
-				loader: 'jshint-loader'
-			}
 		]
+		// ,perLoaders : [
+		// 	{
+		// 		test: /\.jsx?$/,
+		// 		include:APP_PATH,
+		// 		loader: 'jshint-loader'
+		// 	}
+		// ]
 	},
 	plugins: [
+		new webpack.optimize.UglifyJsPlugin({minimize:true}),
 		new HtmlwebpackPlugin({
 			title:"Hello World app",
 			templates: path.resolve(TEM_PATH,'index.html'),
@@ -71,15 +72,11 @@ module.exports = {
 			// 要把script插入到标签里
 			inject:'body'
 		}),
-		// 加载jQuery plugin
-		// new webpack.ProvidePlugin({
-		// 	$: "jquery",
-		// 	jQuery: "jquery",
-		// 	"window.jQuery": "jquery"
-		// })
+		// 把入口文件里面的数组打包成verdors.js
+		new webpack.optimize.CommonsChunkPlugin('vendors','vendors.js')
 	],
-	devtool : 'eval-source-map',
-	jshint : {
-		"esnext" : true
-	}
+	devtool : 'eval-source-map'
+	// ,jshint : {
+	// 	"esnext" : true
+	// }
 };

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --hot --inline"
+    "start": "webpack-dev-server --hot --inline",
+    "build": "webpack --progress --profile --colors --config webpack.production.config.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,7 +17,10 @@
     "css-loader": "^0.23.1",
     "file-loader": "^0.8.5",
     "html-webpack-plugin": "^1.7.0",
+    "imports-loader": "^0.6.5",
     "jquery": "^2.1.4",
+    "jshint": "^2.8.0",
+    "jshint-loader": "^0.8.3",
     "moment": "^2.10.6",
     "node-sass": "^3.4.2",
     "sass-loader": "^3.1.2",
